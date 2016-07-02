@@ -1,0 +1,42 @@
+type Session {
+  id: ID!
+  currentUser: User
+}
+
+type User implements Node {
+	id: ID!
+	email: String! @unique
+	first: String
+	last: String
+	firstLast: String @virtual
+	lastFirst: String @virtual
+	createdAt: Date!
+	passwordHash: String! @hidden
+	profileImage: String! @virtual
+	posts: Post @relationship(path: "=AUTHORED=>")
+	location: Location @relationship(path: "<-LIVES-") 
+	localFeed: Post @relationship(path: "-LIVES->Location=LIVES=>User=AUTHORED=>")
+	followedUsers: User @relationship(path: "=FOLLOWED=>")
+	followers: User @relationship(path: "<=FOLLOWED=")
+	followedFeed: Post @relationship(path: "=FOLLOWED=>User=AUTHORED=>")
+
+}
+
+type Post implements Node {
+	id: ID!
+	title: String!
+	text: String
+	createdAt: Date!
+	author: User @relationship(path: "<-AUTHORED-")
+	locale: Location @relationship(path:"<-POSTEDIN-")
+
+}
+
+type Location implements Node {
+	id: ID!
+	name: String!@unique
+	createdAt: Date!
+	users: User @relationship(path:"=LIVES=>")
+	posts: Post @relationship(path:"=POSTEDIN=>")
+}
+	
