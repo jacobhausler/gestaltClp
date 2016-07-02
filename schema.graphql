@@ -14,12 +14,11 @@ type User implements Node {
 	passwordHash: String! @hidden
 	profileImage: String! @virtual
 	posts: Post @relationship(path: "=AUTHORED=>")
-	location: Location @relationship(path: "<-LIVES-") 
+	location: Location @relationship(path: "<-LIVES-")
 	localFeed: Post @relationship(path: "-LIVES->Location=LIVES=>User=AUTHORED=>")
 	followedUsers: User @relationship(path: "=FOLLOWED=>")
 	followers: User @relationship(path: "<=FOLLOWED=")
 	followedFeed: Post @relationship(path: "=FOLLOWED=>User=AUTHORED=>")
-
 }
 
 type Post implements Node {
@@ -29,7 +28,6 @@ type Post implements Node {
 	createdAt: Date!
 	author: User @relationship(path: "<-AUTHORED-")
 	locale: Location @relationship(path:"<-POSTEDIN-")
-
 }
 
 type Location implements Node {
@@ -39,4 +37,3 @@ type Location implements Node {
 	users: User @relationship(path:"=LIVES=>")
 	posts: Post @relationship(path:"=POSTEDIN=>")
 }
-	

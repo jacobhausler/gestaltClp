@@ -10,10 +10,10 @@ app.use(gestaltServer({
   objects: importAll(`${__dirname}/objects`),
   mutations: importAll(`${__dirname}/mutations`),
   database: gestaltPostgres({
-    databaseURL: 'postgres://localhost/cldb',
+    databaseURL: 'postgres://localhost/gestalt_clp',
   }),
   development: true,
   secret: '༼ つ ◕_◕ ༽つ',
 }));
 
-app.listen(3000);
+app.listen(8000);
